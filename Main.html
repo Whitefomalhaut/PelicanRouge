@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Викторина</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+
+        #quizForm {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p#score {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="quizForm">
+        <div id="nameQuestion">
+            <p>Введите ваше имя и фамилию:</p>
+            Имя: <input type="text" id="name"><br>
+            Фамилия: <input type="text" id="surname"><br><br>
+            <button type="button" onclick="checkName()">Подтвердить</button>
+            <p class="error" id="nameError" style="display: none;">Пожалуйста, обратите внимание, что только одно имя и фамилия действительны здесь, также, что все введено на латинице, а фамилия очень краткая и имеет отсылку.</p>
+        </div>
+
+        <div id="question1" style="display: none;">
+            <p>Какое название имеет парк в котором были?</p>
+            <input type="radio" name="park" value="1"> Солом'янський ландшафтний<br>
+            <input type="radio" name="park" value="2"> Парк Орлятко<br>
+            <input type="radio" name="park" value="3"> Парк Дубки<br>
+            <input type="radio" name="park" value="4"> Першотравневий<br><br>
+            <button type="button" onclick="checkFirstQuestion()">Подтвердить</button>
+        </div>
+        
+        <div id="question2" style="display: none;">
+            <p>В какой день мы говорили до 6 утра, так что я опоздал на работу и меня тормозили коллеги?</p>
+            <input type="radio" name="date" value="1"> 5 сентября<br>
+            <input type="radio" name="date" value="2"> 6 сентября<br>
+            <input type="radio" name="date" value="3"> 7 сентября<br>
+            <input type="radio" name="date" value="4"> 12 сентября<br><br>
+            <button type="button" onclick="checkSecondQuestion()">Подтвердить</button>
+        </div>
+    </form>
+
+    <p id="score">Счет: 0</p>
+
+    <script>
+        let score = 0;
+
+        function checkName() {
+            const nameInput = document.getElementById('name').value;
+            const surnameInput = document.getElementById('surname').value;
+
+            if (nameInput === "Marina" && surnameInput === "K") {
+                document.getElementById('nameQuestion').style.display = 'none';
+                document.getElementById('question1').style.display = 'block';
+            } else {
+                document.getElementById('nameError').style.display = 'block';
+            }
+        }
+
+        function checkFirstQuestion() {
+            const parkRadios = document.getElementsByName('park');
+            for (let i = 0; i < parkRadios.length; i++) {
+                if (parkRadios[i].checked) {
+                    if (parkRadios[i].value === "4") {
+                        document.getElementById('question1').style.display = 'none';
+                        document.getElementById('question2').style.display = 'block';
+                    } else {
+                        score--;
+                        document.getElementById('score').textContent = 'Счет: ' + score;
+                    }
+                    break;
+                }
+            }
+        }
+
+        function checkSecondQuestion() {
+            const dateRadios = document.getElementsByName('date');
+            for (let i = 0; i < dateRadios.length; i++) {
+                if (dateRadios[i].checked) {
+                    if (dateRadios[i].value === "2") {
+                        window.location.href = '1.html';
+                    } else {
+                        score--;
+                        document.getElementById('score').textContent = 'Счет: ' + score;
+                    }
+                    break;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
